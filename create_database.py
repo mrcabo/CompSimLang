@@ -64,3 +64,7 @@ if __name__ == "__main__":
     write_block(train_file, block, "-recovery", 432)
 
     train_file.close()
+
+
+    # Make the test set
+    # TODO: test set
