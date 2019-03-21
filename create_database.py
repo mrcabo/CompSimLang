@@ -1,11 +1,11 @@
 import numpy as np
 
 
-def write_block(f, block, block_num):
+def write_block(f, block, block_num, num_examples):
     sInput = "I: {   1} "  # + "{}".format(0)
     sTarget = "T: {   1} "  # + "{}".format(0)
-    f.write("name: Block" + "{}".format(block_num) + " 432\n")
-    for i, x in enumerate(block):
+    f.write("name: Block" + "{}".format(block_num) + " {}".format(num_examples) + "\n")
+    for _, x in enumerate(block):
         f.write(sInput + "{}".format(x[0]) + '\n')
         f.write(sTarget + "{}".format(0) + '\n')
         f.write(sInput + "{}".format(x[1]) + '\n')
@@ -56,11 +56,11 @@ if __name__ == "__main__":
     train_file = open(path, 'w')
     for i in range(6):
         np.random.shuffle(block)
-        write_block(train_file, block, i)
+        write_block(train_file, block, i, 432)
 
     np.random.shuffle(block_ungr)
-    write_block(train_file, block_ungr, "-ungrammatical")
+    write_block(train_file, block_ungr, "-ungrammatical", 864)
     np.random.shuffle(block)
-    write_block(train_file, block, "-recovery")
+    write_block(train_file, block, "-recovery", 432)
 
     train_file.close()

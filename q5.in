@@ -8,8 +8,7 @@ set OUTPUTS 30
 # creates and activates new network
 # SRBPTT (simple recurrent backprop-through-time)
 # Don't need to use CONTINUOUS (fully recurrent)
-# addNet myNet -i 432 SRBPTT $INPUT $HIDDEN ELMAN $OUTPUTS
-addNet myNet -i 432 SRBPTT $INPUT $HIDDEN ELMAN $OUTPUTS
+addNet myNet -i 864 SRBPTT $INPUT $HIDDEN ELMAN $OUTPUTS
 
 #add a lexicon layer
 #addGroup labels 5 OUTPUT
@@ -24,15 +23,23 @@ randWeights -r 0.1
 # load examples: statistical learning based on prediction
 loadExamples q5_train.ex
 # loadExamples q5_train.ex -s q5train -exmode ORDERED -m R
-# useTrainingSet q5train 
-# useTestingSet q5train 
+# useTrainingSet q5train
+# useTestingSet q5train
+
+graphObject
 
 #saveWeights preTrain.wt
 
+
 setObj learningRate 	0.1
 setObj momentum 	0.8
-setObj batchSize        0
-dougsMomentum 500 -r 10
+
+setObj batchSize        1
+dougsMomentum 3888 -r 100
+
+#setObj batchSize        0
+#dougsMomentum 500 -r 10
+
 #50 training cycles is too few here
 #test statistical learning
 # set f [open "q5Learned.txt" "a"]
