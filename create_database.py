@@ -16,7 +16,8 @@ def write_block(f, block, block_num):
 if __name__ == "__main__":
     np.random.seed(0)
 
-    path = "q5_train.txt"
+    train_filename = "q5_train.txt"
+    test_filename = "q5_test.txt"
     num_prefixes = 3
     num_middle_words = 24
     num_suffixes = 3
@@ -51,7 +52,7 @@ if __name__ == "__main__":
     block_ungr = np.vstack((block_ungr, np.hstack((np.hstack((pref, mid)), suf1))))
     block_ungr = np.vstack((block_ungr, np.hstack((np.hstack((pref, mid)), suf2))))
 
-    train_file = open(path, 'w')
+    train_file = open(train_filename, 'w')
     for i in range(6):
         np.random.shuffle(block)
         write_block(train_file, block, i)
@@ -66,3 +67,9 @@ if __name__ == "__main__":
 
     # Make the test set
     # TODO: test set
+    train_file = open(test_filename, 'w')
+    np.random.shuffle(block)
+    write_block(train_file, block[0:12], 8)
+    train_file.close()
+
+

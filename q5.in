@@ -12,7 +12,10 @@ elmanConnect  hidden  context
 orderGroups bias input context hidden output
 
 # Loads training set
-loadExamples q5_train.ex
+loadExamples q5_train.ex -s trainset
+loadExamples q5_test.ex -s testset
+useTrainingSet trainset
+useTestingSet testset
 
 # Creates error graph
 graphObject
@@ -23,4 +26,4 @@ setObj momentum  0.8
 setObj batchSize  1
 
 # Train network (number sentences = 72×6+72×2+72 = 648)
-dougsMomentum 648 -r 100
+dougsMomentum 648 -r 1
