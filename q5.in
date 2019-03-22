@@ -1,49 +1,26 @@
-set INPUT 30
-set HIDDEN 15
-set OUTPUTS 30
+# Create net
+addNet mynet -i 5
 
-#make sure you are in the correct directory
-#cd C:/research/Babble-A-Lex/model/Lens/BabbleLex
+# Add layers
+addGroup input 30 INPUT
+addGroup hidden 15
+addGroup context 15 ELMAN
+addGroup output 30 OUTPUT
 
-# creates and activates new network
-# SRBPTT (simple recurrent backprop-through-time)
-# Don't need to use CONTINUOUS (fully recurrent)
-addNet myNet -i 864 SRBPTT $INPUT $HIDDEN ELMAN $OUTPUTS
-
-#add a lexicon layer
-#addGroup labels 5 OUTPUT
-#connectGroups hidden labels
-
-# order the groups
+connectGroups {input context} hidden output
+elmanConnect  hidden  context
 orderGroups bias input context hidden output
 
-# Randomizes weights from +/- .1
-randWeights -r 0.1
-
-# load examples: statistical learning based on prediction
+# Loads training set
 loadExamples q5_train.ex
-# loadExamples q5_train.ex -s q5train -exmode ORDERED -m R
-# useTrainingSet q5train
-# useTestingSet q5train
 
+# Creates error graph
 graphObject
 
-#saveWeights preTrain.wt
+# Hyperparameters
+setObj learningRate  0.1
+setObj momentum  0.8
+setObj batchSize  1
 
-
-setObj learningRate 	0.1
-setObj momentum 	0.8
-
-setObj batchSize        1
-dougsMomentum 3888 -r 100
-
-#setObj batchSize        0
-#dougsMomentum 500 -r 10
-
-#50 training cycles is too few here
-#test statistical learning
-# set f [open "q5Learned.txt" "a"]
-# puts $f [test -r]
-#close $f
-
-# saveWeights postTrain.wt
+# Train network (number sentences = 72×6+72×2+72 = 648)
+dougsMomentum 648 -r 100
