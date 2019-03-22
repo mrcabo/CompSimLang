@@ -61,15 +61,10 @@ if __name__ == "__main__":
     write_block(train_file, block_ungr, "6")
     np.random.shuffle(block)
     write_block(train_file, block, "7")
-
     train_file.close()
 
-
     # Make the test set
-    # TODO: test set
     train_file = open(test_filename, 'w')
     np.random.shuffle(block)
     write_block(train_file, block[0:12], 8)
     train_file.close()
-
-
