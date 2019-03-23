@@ -1,5 +1,5 @@
 # Create net
-addNet mynet -i 5
+addNet myNet -i 5
 
 # Add layers
 addGroup input 30 INPUT
@@ -9,7 +9,12 @@ addGroup output 30 OUTPUT
 
 connectGroups {input context} hidden output
 elmanConnect  hidden  context
+
+# order the groups
 orderGroups bias input context hidden output
+
+# Randomizes weights from +/- 1
+randWeights -r 1
 
 # Loads training set
 loadExamples q5_train.ex -s trainset
@@ -17,13 +22,28 @@ loadExamples q5_test.ex -s testset
 useTrainingSet trainset
 useTestingSet testset
 
+# Opens the unit viewer
+viewUnits
 # Creates error graph
-graphObject
+graphObject error
 
 # Hyperparameters
 setObj learningRate  0.1
 setObj momentum  0.8
 setObj batchSize  1
 
+
+#changeGroupType "hidden" +WRITE_OUTPUTS
+
 # Train network (number sentences = 72×6+72×2+72 = 648)
 dougsMomentum 648 -r 1
+
+# test model
+#set f [open "output-q5test.txt" "a"]
+#puts $f [test -r]
+#close $f
+
+changeGroupType "hidden" +WRITE_OUTPUTS
+openNetOutputFile testOutputDebug.out -append
+test
+closeNetOutputFile
