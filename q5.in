@@ -16,14 +16,24 @@ orderGroups bias input context hidden output
 # Randomizes weights from +/- 1
 randWeights -r 1
 
+changeGroupType "hidden" +WRITE_OUTPUTS
+
 # Loads training set
-loadExamples q5_train.ex -s trainset
+#loadExamples q5_train.ex -s trainset
+
+loadExamples q5_train_block0.ex -s block0
+loadExamples q5_train_block1.ex -s block1
+loadExamples q5_train_block2.ex -s block2
+loadExamples q5_train_block3.ex -s block3
+loadExamples q5_train_block4.ex -s block4
+loadExamples q5_train_block5.ex -s block5
+loadExamples q5_train_block6.ex -s ungrammatical
+loadExamples q5_train_block7.ex -s recovery
+
 loadExamples q5_test.ex -s testset
-useTrainingSet trainset
+
 useTestingSet testset
 
-# Opens the unit viewer
-viewUnits
 # Creates error graph
 graphObject error
 
@@ -32,18 +42,95 @@ setObj learningRate  0.1
 setObj momentum  0.8
 setObj batchSize  1
 
+# block0
+useTrainingSet block0
+useTestingSet block0
+#get full network output while training
+viewUnits
+openNetOutputFile testOutputDebug.out -append
+test
+closeNetOutputFile
+dougsMomentum 72 -r 1
 
-#changeGroupType "hidden" +WRITE_OUTPUTS
+# block1
+useTrainingSet block1
+useTestingSet block1
+#get full network output while training
+viewUnits
+openNetOutputFile testOutputDebug.out -append
+test
+closeNetOutputFile
+dougsMomentum 72 -r 1
 
-# Train network (number sentences = 72×6+72×2+72 = 648)
-dougsMomentum 648 -r 1
+# block2
+useTrainingSet block2
+useTestingSet block2
+#get full network output while training
+viewUnits
+openNetOutputFile testOutputDebug.out -append
+test
+closeNetOutputFile
+dougsMomentum 72 -r 1
+
+# block3
+useTrainingSet block3
+useTestingSet block3
+#get full network output while training
+viewUnits
+openNetOutputFile testOutputDebug.out -append
+test
+closeNetOutputFile
+dougsMomentum 72 -r 1
+
+# block4
+useTrainingSet block4
+useTestingSet block4
+#get full network output while training
+viewUnits
+openNetOutputFile testOutputDebug.out -append
+test
+closeNetOutputFile
+dougsMomentum 72 -r 1
+
+# block5
+useTrainingSet block5
+useTestingSet block5
+#get full network output while training
+viewUnits
+openNetOutputFile testOutputDebug.out -append
+test
+closeNetOutputFile
+dougsMomentum 72 -r 1
+
+# ungrammatical
+useTrainingSet ungrammatical
+useTestingSet ungrammatical
+#get full network output while training
+viewUnits
+openNetOutputFile testOutputDebug.out -append
+test
+closeNetOutputFile
+dougsMomentum 144 -r 1
+
+# recovery
+useTrainingSet recovery
+useTestingSet recovery
+#get full network output while training
+viewUnits
+openNetOutputFile testOutputDebug.out -append
+test
+closeNetOutputFile
+dougsMomentum 72 -r 1
 
 # test model
-#set f [open "output-q5test.txt" "a"]
-#puts $f [test -r]
-#close $f
+useTrainingSet testset
+useTestingSet testset
+set f [open "output-q5test.txt" "a"]
+puts $f [test -r]
+close $f
 
-changeGroupType "hidden" +WRITE_OUTPUTS
+#get full network output while training
+viewUnits
 openNetOutputFile testOutputDebug.out -append
 test
 closeNetOutputFile
