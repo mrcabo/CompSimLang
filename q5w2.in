@@ -21,16 +21,16 @@ changeGroupType "hidden" +WRITE_OUTPUTS
 # Loads training set
 #loadExamples q5_train.ex -s trainset
 
-loadExamples q5_train_block0.ex -s block0
-loadExamples q5_train_block1.ex -s block1
-loadExamples q5_train_block2.ex -s block2
-loadExamples q5_train_block3.ex -s block3
-loadExamples q5_train_block4.ex -s block4
-loadExamples q5_train_block5.ex -s block5
-loadExamples q5_train_block6.ex -s ungrammatical
-loadExamples q5_train_block7.ex -s recovery
+loadExamples q5w2_train_block0.ex -s block0
+loadExamples q5w2_train_block1.ex -s block1
+loadExamples q5w2_train_block2.ex -s block2
+loadExamples q5w2_train_block3.ex -s block3
+loadExamples q5w2_train_block4.ex -s block4
+loadExamples q5w2_train_block5.ex -s block5
+loadExamples q5w2_train_block6.ex -s ungrammatical
+loadExamples q5w2_train_block7.ex -s recovery
 
-loadExamples q5_test.ex -s testset
+loadExamples q5w2_test.ex -s testset
 
 useTestingSet testset
 
